@@ -239,33 +239,41 @@ function getListFiltered(
     return $dataList;
 }
 
-
 function getListRest() {
     $dataList = array();
-    
-     if( $_SESSION['userLevel'] == 1){
-           $userID = $_SESSION['userID'];
-        // TODO: get the user and store into $dataList
-            $stmt = $this->db->prepare("SELECT * FROM user WHERE user_Id = $userID");
-            //$stmt->bindParam(':userID',$userID);
-            $stmt->execute();
+    $rightUser = false;
+    if( $_SESSION['userLevel'] >= 1){
+        $userID = $_SESSION['userID'];
+     // TODO: get the user and store into $dataList
+         $stmt = $this->db->prepare("SELECT * FROM user WHERE user_Id = $userID");
+         //$stmt->bindParam(':userID',$userID);
+         $stmt->execute();
 
-        $dataList = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            // return the user
+     $dataList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         // return the user
 
-        return $dataList; 
+     return $dataList; 
+ }else{
+        return $rightUser;
     }
-    
-   
+           
+}
+
+function getAllListRest() {
+    $dataList = array();
+    $rightUser = false;
     if($_SESSION['userLevel'] == 8){
         // TODO: get the user and store into $dataList array($this->userdata['user_Id'])
             $stmt = $this->db->prepare("SELECT * FROM user");
             $stmt->execute();
 
        $dataList = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+  
             // return the user
 
         return $dataList; 
+    }else{
+        return $rightUser;
     }
            
 }

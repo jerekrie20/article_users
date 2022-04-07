@@ -13,6 +13,7 @@ $artilceID = $_GET['articleID'];
 
 if (!$newsArticle->load($artilceID) ){
 	die("article not found");
+	exit;
 }
 
 
